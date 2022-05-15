@@ -18,8 +18,15 @@ use App\Http\Controllers\LoginController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('login/twitter', [LoginController::class, 'redirectToTwitter']);
-Route::get('twitter/callback', [LoginController::class, 'handleTwitterCallback']);
-Route::get('/home', function () {
-    return 'User is logged in';
+Route::group(['middleware'=>'web'], function(){
+    Route::get('login/twitter', [LoginController::class, 'redirectToTwitter']);
+    Route::get('twitter/callback', [LoginController::class, 'handleTwitterCallback']);
+    Route::get('/home', function () {
+        return 'User is logged in';
+    });
 });
+
+Route::group(['middleware'=>'web'], function(){
+    Route::get('login/findOrCreateUser', [LoginController::class, 'findOrCreateUser']);
+});
+

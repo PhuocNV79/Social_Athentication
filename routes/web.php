@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\LoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,4 +15,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('login/twitter', [LoginController::class, 'redirectToTwitter']);
+Route::get('twitter/callback', [LoginController::class, 'handleTwitterCallback']);
+Route::get('/home', function () {
+    return 'User is logged in';
 });
