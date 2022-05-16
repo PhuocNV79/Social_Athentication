@@ -9,12 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    protected $uri;
-    protected $provider;
-
-    public function __construct(){
-        $this->provider = $this->getProvider();
-    }
 
     /**
      * Where to redirect users after login.
@@ -23,20 +17,15 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/home';
 
-    public function loginWithTwitter()
+    public function redirectToProvider($provider)
     {
-        return 'loginWithTwitter';
+        return Socialite::driver($provider)->redirect();
     }
 
-    public function redirectToTwitter()
+    public function handleProviderCallback($provider)
     {
-        return Socialite::driver($this->provider)->redirect();
-    }
-
-    public function handleProviderCallback()
-    {
-        $user = Socialite::driver($this->provider)->user();
-        $authUser = $this->findOrCreateUser($user);
+        $user = Socialite::driver($provider)->user();
+        $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
         return redirect($this->redirectTo);
     }
@@ -48,7 +37,7 @@ class LoginController extends Controller
      * @param $provider Social auth provider
      * @return  User
      */
-    public function findOrCreateUser($user) //$user
+    public function findOrCreateUser($user, $provider)
     {
         $authUser = User::where('provider_id', $user->id)->first();
         if ($authUser) {
@@ -57,15 +46,9 @@ class LoginController extends Controller
         return User::create([
             'name'     => $user->name,
             'email'    => $user->email,
-            'provider' => $this->provider,
+            'provider' => $provider,
             'provider_id' => $user->id
         ]);
     }
 
-    public function getProvider(){
-        $this->uri = request()->getRequestUri();
-        $arrPath = explode('/', $this->uri);
-        $this->provider = end($arrPath);
-        return $this->provider;
-    }
 }
