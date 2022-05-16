@@ -9,7 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    protected $provider = 'twitter';
+    protected $uri;
+    protected $provider;
+
+    public function __construct(){
+        $this->provider = $this->getProvider();
+    }
 
     /**
      * Where to redirect users after login.
@@ -28,7 +33,7 @@ class LoginController extends Controller
         return Socialite::driver($this->provider)->redirect();
     }
 
-    public function handleTwitterCallback()
+    public function handleProviderCallback()
     {
         $user = Socialite::driver($this->provider)->user();
         $authUser = $this->findOrCreateUser($user);
@@ -44,7 +49,8 @@ class LoginController extends Controller
      * @return  User
      */
     public function findOrCreateUser($user) //$user
-    {$authUser = User::where('provider_id', $user->id)->first();
+    {
+        $authUser = User::where('provider_id', $user->id)->first();
         if ($authUser) {
             return $authUser;
         }
@@ -54,5 +60,12 @@ class LoginController extends Controller
             'provider' => $this->provider,
             'provider_id' => $user->id
         ]);
+    }
+
+    public function getProvider(){
+        $this->uri = request()->getRequestUri();
+        $arrPath = explode('/', $this->uri);
+        $this->provider = end($arrPath);
+        return $this->provider;
     }
 }
