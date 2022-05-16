@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -42,24 +43,8 @@ class LoginController extends Controller
      * @param $provider Social auth provider
      * @return  User
      */
-    public function findOrCreateUser() //$user
-    {
-//        $user = User::create([
-//            'name'     => 'nguyenvanphuoc',
-//            'email'    => 'nguyenvanphuoc4@gmail.com',
-//            'provider' => $this->provider,
-//            'provider_id' => 3223
-//        ]);
-
-        $user = new User();
-
-        $user->name = 'nguyenvanphuoc';
-        $user->email = 'nguyenvanphuoc@email.com';
-        $user->provider = $this->provider;
-        $user->provider_id = 24352345;
-
-
-        $authUser = User::where('provider_id', 3224)->first();
+    public function findOrCreateUser($user) //$user
+    {$authUser = User::where('provider_id', $user->id)->first();
         if ($authUser) {
             return $authUser;
         }
@@ -67,7 +52,7 @@ class LoginController extends Controller
             'name'     => $user->name,
             'email'    => $user->email,
             'provider' => $this->provider,
-            'provider_id' => $user->provider_id
+            'provider_id' => $user->id
         ]);
     }
 }
