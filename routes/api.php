@@ -18,11 +18,10 @@ use App\Http\Controllers\LoginController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::group(['middleware'=>'web'], function(){
-    Route::get('login/{provider}', [LoginController::class, 'redirectToProvider']);
-    Route::get('{provider}/callback', [LoginController::class, 'handleProviderCallback']);
-    Route::get('/home', function () {
-        return 'User is logged in';
-    });
-});
-
+//Route::group(['middleware'=>'web'], function(){
+//    Route::get('login/{provider}', [LoginController::class, 'redirectToProvider']);
+//    Route::get('{provider}/callback', [LoginController::class, 'handleProviderCallback']);
+//    Route::get('/home', function () {
+//        return 'User is logged in';
+//    });
+//});
