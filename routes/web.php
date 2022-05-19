@@ -16,16 +16,17 @@ use App\Http\Controllers\LoginController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('login', function(){
+    return view('login');
+});
 Route::group(['middleware'=>'web'], function(){
-    Route::get('login/{provider}', [LoginController::class, 'redirectToProvider']);
+    Route::get('login/{provider}', [LoginController::class, 'redirectToProvider'])->name('loginWithTwitter');
     Route::get('{provider}/callback', [LoginController::class, 'handleProviderCallback']);
     Route::get('/home', function () {
         return 'User is logged in';
     });
 });
 
-Route::get('login', function(){
-   return view('login');
-});
+
 
 
