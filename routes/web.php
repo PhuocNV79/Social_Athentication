@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 Route::get('login', function(){
     return view('login');
-});
+})->name('login');
 Route::group(['middleware'=>'web'], function(){
     Route::get('login/{provider}', [LoginController::class, 'redirectToProvider'])->name('loginWithTwitter');
     Route::get('{provider}/callback', [LoginController::class, 'handleProviderCallback']);
