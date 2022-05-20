@@ -27,18 +27,16 @@ class LoginController extends Controller
         if($provider == 'twitter')
         {
             $user = Socialite::driver($provider)->user();
-            $authUser = $this->findOrCreateUser($user, $provider);
-            Auth::login($authUser, true);
-            return redirect($this->redirectTo);
         }
-         if($provider == 'google')
+
+        if($provider == 'google')
          {
              $user = Socialite::driver($provider)->stateless()->user();
-             $authUser = $this->findOrCreateUser($user, $provider);
-             Auth::login($authUser, true);
-             return redirect($this->redirectTo);
          }
 
+        $authUser = $this->findOrCreateUser($user, $provider);
+        Auth::login($authUser, true);
+        return redirect($this->redirectTo);
     }
 
     /**
