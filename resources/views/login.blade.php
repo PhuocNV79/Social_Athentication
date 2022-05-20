@@ -19,8 +19,15 @@
     <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Sign in</h1>
     <div class="row">
         <div class="col-6">
-            <form class="form-signin" action="{{route('loginWithTwitter', ['twitter'])}}">
-                <button class="btn btn-block" type="submit" style="color:#1DA1F2"><span><i class="fab fa-twitter "></i> Sign in with Twitter</span> </button>
+            <form class="form-signin" action="{{route('loginWithProvider', ['twitter'])}}">
+                <button class="btn btn-block" type="submit" style="background-color:#1DA1F2; color: white"><span><i class="fab fa-twitter "></i> Sign in with Twitter</span> </button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <form class="form-signin" action="{{route('loginWithProvider', ['google'])}}">
+                <button class="btn btn-block" type="submit" style="background-color:#ea4335 ; color: white"><span><i class="fab fa-google"></i> Sign in with Google</span> </button>
             </form>
         </div>
     </div>
