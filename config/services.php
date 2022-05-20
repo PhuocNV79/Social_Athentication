@@ -37,4 +37,10 @@ return [
         'redirect' => env('TWITTER_CALLBACK_URL', 'http://laravel.test/twitter/callback'),
     ],
 
+    'google' => [
+        'client_id' => env('GOOGLE_API_KEY'),
+        'client_secret' => env('GOOGLE_API_SECRET_KEY'),
+        'redirect' => env('GOOGLE_CALLBACK_URL', 'http://laravel.test/google/callback'),
+    ],
+
 ];
