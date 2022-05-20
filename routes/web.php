@@ -20,7 +20,7 @@ Route::get('login', function(){
     return view('login');
 })->name('login');
 Route::group(['middleware'=>'web'], function(){
-    Route::get('login/{provider}', [LoginController::class, 'redirectToProvider'])->name('loginWithTwitter');
+    Route::get('login/{provider}', [LoginController::class, 'redirectToProvider'])->name('loginWithProvider');
     Route::get('{provider}/callback', [LoginController::class, 'handleProviderCallback']);
     Route::get('/home', function () {
         return 'User is logged in';
