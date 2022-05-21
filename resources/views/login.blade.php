@@ -19,7 +19,7 @@
     <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Sign in</h1>
     <div class="row">
         <div class="col-6">
-            <form class="form-signin" action="{{route('loginWithTwitter', ['twitter'])}}">
+            <form class="form-signin" action="{{route('loginWithTwitterAPI', ['twitter'])}}">
                 <button class="btn btn-block" type="submit" style="color:#1DA1F2"><span><i class="fab fa-twitter "></i> Sign in with Twitter</span> </button>
             </form>
         </div>
